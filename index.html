@@ -3,23 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>طراحی بازی‌های آنلاین | اینتل‌سافت</title>
-<meta name="description" content="نمونه‌کار طراحی بازی‌های کوچک آنلاین — سبک، سریع و رایگان | اینتل‌سافت">
-<style>
-/* ================= فونت‌ها (فایل‌ها را در پوشه fonts کنار صفحه بگذارید) ================= */
-@font-face{
-  font-family:'Vazirmatn';
-  src:url('fonts/Vazirmatn.woff2') format('woff2-variations'),
-      url('fonts/Vazirmatn.woff2') format('woff2');
-  font-weight:100 900;font-display:swap;
-}
-@font-face{
-  font-family:'Lalezar';
-  src:url('fonts/Lalezar.woff2') format('woff2'),
-      url('fonts/Lalezar.ttf') format('truetype');
-  font-weight:400;font-display:swap;
-}
+<title>بازی‌های آنلاین | اینتل‌سافت</title>
+<meta name="description" content="۱۲ بازی آنلاین سرگرم‌کننده — رایگان، بدون نصب، روی موبایل و کامپیوتر | اینتل‌سافت">
 
+<!-- فونت‌ها از CDN گوگل: لاله‌زار (تیترها) + وزیرمتن (متن‌ها) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+<style>
 /* ================= متغیرهای تم ================= */
 :root{
   --bg:#0c1322; --bg2:#0f1a31; --card:#152140; --card2:#1a2a50;
@@ -54,7 +46,7 @@ body{
   font-size:16px;line-height:1.9;overflow-x:hidden;
   transition:background .35s,color .35s;
 }
-h1,h2,h3,.logo,.foot-logo,.arcade-title{font-family:'Lalezar','Vazirmatn',Tahoma,sans-serif;font-weight:400;line-height:1.6}
+h1,h2,h3,.logo,.foot-logo,.arcade-title,.ov-title{font-family:'Lalezar','Vazirmatn',Tahoma,sans-serif;font-weight:400;line-height:1.6}
 a{text-decoration:none;color:inherit}
 button{font-family:inherit}
 ::selection{background:var(--amber);color:#20140a}
@@ -118,22 +110,35 @@ body::after{
 .hero-chips span{background:var(--card2);border:1px solid var(--line);border-radius:5px;padding:4px 12px;font-size:.8rem;color:var(--muted)}
 .hero-chips b{color:var(--lime)}
 
-/* ================= دستگاه آرکید (مینی‌گیم واقعی) ================= */
+/* ================= دستگاه آرکید (مارِ گرسنه) ================= */
 .arcade{background:var(--card);border:3px solid var(--line2);border-radius:16px;overflow:hidden;box-shadow:-12px 12px 0 var(--hard);animation:bob 6s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-10px)}}
 .arcade-bar{display:flex;justify-content:space-between;align-items:center;padding:11px 18px;background:var(--card2);border-bottom:3px solid var(--line)}
-.arcade-title{font-size:1.2rem;color:var(--coral)}
+.arcade-title{font-size:1.25rem;color:var(--lime)}
 .arcade-score{background:var(--crt);color:var(--lime);border:2px solid var(--crt-line);border-radius:7px;padding:3px 12px;font-size:.85rem;font-weight:800;direction:ltr}
 .arcade-score b{color:#fff}
-.arena{position:relative;height:300px;overflow:hidden;cursor:crosshair;background:radial-gradient(circle at 50% 40%,#12203f 0%,var(--crt) 72%)}
-.arena::after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 1px,transparent 1px 3px)}
-.invader{position:absolute;padding:4px;background:none;border:none;font-size:44px;line-height:1;cursor:pointer;user-select:none;touch-action:manipulation;transition:left .18s ease,top .18s ease;filter:drop-shadow(0 0 14px rgba(46,196,182,.55))}
-.invader.pop{animation:invPop .3s ease}
-@keyframes invPop{50%{transform:scale(1.5) rotate(14deg)}}
-.pop-score{position:absolute;color:var(--lime);font-weight:900;font-size:1.15rem;pointer-events:none;transform:translate(-50%,-50%);animation:popUp .7s ease forwards}
+.arena{position:relative;overflow:hidden;background:var(--crt)}
+.arena::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 1px,transparent 1px 3px)}
+.arena canvas{display:block;width:100%;height:auto;touch-action:pan-y}
+.pop-score{position:absolute;z-index:2;color:var(--lime);font-weight:900;font-size:1.05rem;pointer-events:none;transform:translate(-50%,-50%);animation:popUp .7s ease forwards}
 @keyframes popUp{to{opacity:0;transform:translate(-50%,-190%)}}
-.arcade-foot{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;font-size:.85rem;color:var(--muted);background:var(--card2);border-top:3px solid var(--line)}
-.arcade-foot b{color:var(--amber)}
+.game-overlay{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:20px;background:rgba(6,10,20,.82)}
+.game-overlay.hide{display:none}
+.ov-title{font-size:1.8rem;color:#fff}
+.ov-text{color:#9fb0d8;font-size:.92rem;max-width:34ch}
+.ov-text b{color:var(--lime)}
+.ov-link{color:var(--teal);font-size:.85rem;font-weight:700;transition:color .25s}
+.ov-link:hover{color:var(--amber)}
+.arcade-foot{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 18px;background:var(--card2);border-top:3px solid var(--line)}
+.dpad{display:grid;grid-template-areas:". up ." "left down right";gap:5px}
+.dpad button{width:40px;height:34px;border:2px solid var(--line2);background:var(--card);color:var(--text);border-radius:7px;cursor:pointer;font-size:.75rem;transition:background .15s,transform .1s}
+.dpad button:active{background:var(--amber);color:#20140a;transform:scale(.9)}
+.dpad [data-d="up"]{grid-area:up}
+.dpad [data-d="down"]{grid-area:down}
+.dpad [data-d="left"]{grid-area:left}
+.dpad [data-d="right"]{grid-area:right}
+.foot-info{display:flex;flex-direction:column;gap:4px;align-items:flex-end;font-size:.85rem;color:var(--muted)}
+.foot-info b{color:var(--amber)}
 .blink{animation:blink 1.3s steps(2) infinite;color:var(--teal);font-weight:700}
 @keyframes blink{50%{opacity:0}}
 
@@ -176,7 +181,7 @@ section{position:relative;z-index:1}
 .game-link{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:.92rem;transition:color .25s,gap .25s}
 .game-link:hover{color:var(--stripe);gap:13px}
 
-/* ================= نوار تکنولوژی ================= */
+/* ================= نوار مزایا ================= */
 .tech{position:relative;z-index:1;background:var(--crt);border-block:2px solid var(--line);overflow:hidden}
 .tech-in{display:flex;width:max-content;animation:slide 30s linear infinite}
 .tech:hover .tech-in{animation-play-state:paused}
@@ -194,7 +199,6 @@ section{position:relative;z-index:1}
 .f-big .feat-icon{font-size:3rem}
 .f-big h3{font-size:1.7rem}
 .f-big p{font-size:1rem;max-width:46ch}
-.code-chip{display:inline-block;margin-top:18px;background:var(--crt);color:var(--lime);border:2px solid var(--crt-line);border-radius:8px;padding:6px 16px;font-family:'Courier New',monospace;font-size:.85rem;direction:ltr}
 .f-wide{grid-column:span 3;display:flex;align-items:center;gap:24px}
 .f-wide .feat-icon{margin:0;font-size:2.6rem;flex-shrink:0}
 
@@ -218,11 +222,9 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
 .foot-links a:hover{color:var(--teal)}
 .foot-bottom{border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:.8rem}
 
-/* ================= انیمیشن نمایان‌سازی ================= */
+/* ================= انیمیشن‌ها ================= */
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:translateY(0)}
-
-/* باران پیکسلی (کد مخفی!) */
 .pixel-drop{position:fixed;top:-14px;width:10px;height:10px;z-index:2000;pointer-events:none;animation:drop linear forwards}
 @keyframes drop{to{transform:translateY(112vh) rotate(560deg)}}
 
@@ -239,7 +241,6 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
   .nav-links{display:none}
   .stats-in{grid-template-columns:1fr 1fr;gap:26px 12px}
   .wrap{padding:64px 18px}
-  .arena{height:250px}
   .hero-btns .btn{flex:1 1 100%}
   .bento{grid-template-columns:1fr}
   .f-big,.f-wide{grid-column:span 1}
@@ -258,14 +259,14 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
 <!-- نوار خبری -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-in">
-    <span>🕹️ ۱۲ بازی آنلاینِ رایگان</span><b>✦</b>
-    <span>⚡ بدون نصب — مستقیم در مرورگر</span><b>✦</b>
-    <span>🎮 ساخته‌شده با جاوااسکریپت خالص</span><b>✦</b>
-    <span>🏆 رکوردت رو ثبت کن</span><b>✦</b>
-    <span>🕹️ ۱۲ بازی آنلاینِ رایگان</span><b>✦</b>
-    <span>⚡ بدون نصب — مستقیم در مرورگر</span><b>✦</b>
-    <span>🎮 ساخته‌شده با جاوااسکریپت خالص</span><b>✦</b>
-    <span>🏆 رکوردت رو ثبت کن</span><b>✦</b>
+    <span>🕹️ به بازی‌خانه خوش آمدی!</span><b>✦</b>
+    <span>🐍 همین پایین یک مارِ گرسنه منتظر توست!</span><b>✦</b>
+    <span>🎮 ۱۲ بازی آنلاینِ رایگان</span><b>✦</b>
+    <span>🏆 رکورد بزن و حال کن!</span><b>✦</b>
+    <span>🕹️ به بازی‌خانه خوش آمدی!</span><b>✦</b>
+    <span>🐍 همین پایین یک مارِ گرسنه منتظر توست!</span><b>✦</b>
+    <span>🎮 ۱۲ بازی آنلاینِ رایگان</span><b>✦</b>
+    <span>🏆 رکورد بزن و حال کن!</span><b>✦</b>
   </div>
 </div>
 
@@ -273,45 +274,59 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
 <header class="nav">
   <a class="logo" href="https://intellsoft.ir" target="_blank" rel="noopener"><span class="logo-mark"></span>اینتل‌سافت</a>
   <nav class="nav-links" aria-label="منوی اصلی">
-    <a href="#games">نمونه‌کارها</a>
-    <a href="#features">ویژگی‌ها</a>
+    <a href="#games">بازی‌ها</a>
+    <a href="#features">چرا ما؟</a>
     <a href="https://github.com/intellsoft" target="_blank" rel="noopener">گیت‌هاب</a>
   </nav>
   <div class="nav-actions">
-    <button class="theme-btn" id="themeBtn" aria-label="تغییر تم تاریک و روشن">🌙</button>
+    <button class="theme-btn" id="themeBtn" aria-label="تغییر حالت شب و روز">🌙</button>
     <a class="btn btn-primary nav-cta" href="https://intellsoft.ir" target="_blank" rel="noopener">سفارش پروژه</a>
   </div>
 </header>
 
 <main>
-  <!-- هیرو + مینی‌گیم -->
+  <!-- هیرو + مارِ گرسنه -->
   <section class="hero">
     <div>
-      <span class="kicker">🕹️ استودیوی بازی‌سازی اینتل‌سافت</span>
+      <span class="kicker">🕹️ بازی‌خانه‌ی اینتل‌سافت</span>
       <h1>بازی‌های کوچکِ <span class="hl">آنلاین</span>،<br>هیجانِ <span class="hl2">بی‌نهایت</span>!</h1>
-      <p class="lead">از پازل و آرکید تا بازی‌های آموزشی؛ همه سبک، سریع و بدون نیاز به نصب. همین‌جا مستقیم توی مرورگرت بازی کن، یا برای کسب‌وکار خودت یک بازی اختصاصی سفارش بده.</p>
+      <p class="lead">اینجا ۱۲ بازی سرگرم‌کننده داریم؛ از پازل و مار تا سودوکو و موسیقی. هیچ‌چیزی لازم نیست نصب کنی — فقط روی بازی بزن و شروع کن!</p>
       <div class="hero-btns">
-        <a class="btn btn-primary" href="#games">🎮 بزن بریم!</a>
+        <a class="btn btn-primary" href="#games">🎮 دیدن بازی‌ها</a>
         <a class="btn btn-ghost" href="https://intellsoft.ir" target="_blank" rel="noopener">سفارش بازی اختصاصی</a>
       </div>
       <div class="hero-chips">
         <span><b>✔</b> بدون نصب</span>
         <span><b>✔</b> کاملاً رایگان</span>
-        <span><b>✔</b> اجرا در هر مرورگری</span>
+        <span><b>✔</b> موبایل و کامپیوتر</span>
       </div>
     </div>
 
     <div class="arcade">
       <div class="arcade-bar">
-        <span class="arcade-title">👾 شکار هیولا</span>
-        <span class="arcade-score">SCORE <b id="score">۰</b></span>
+        <span class="arcade-title">🐍 مارِ گرسنه</span>
+        <span class="arcade-score">SCORE <b id="sScore">۰</b></span>
       </div>
-      <div class="arena" id="arena">
-        <button class="invader" id="invader" style="left:42%;top:38%" aria-label="شکار هیولا — کلیک کن">👾</button>
+      <div class="arena" id="sArena">
+        <canvas id="snakeCv" width="340" height="260"></canvas>
+        <div class="game-overlay" id="sOverlay">
+          <div class="ov-title" id="sOvTitle">🐍 مارِ گرسنه</div>
+          <p class="ov-text" id="sOvText">موش‌ها را بخور و بزرگ شو!<br>با دکمه‌های جهت، کشیدن انگشت یا دکمه‌های پایین حرکت کن.</p>
+          <button class="btn btn-primary" id="sStart">▶ شروع بازی</button>
+          <a class="ov-link" href="https://intellsoft.github.io/snake-game-web/" target="_blank" rel="noopener">🐍 نسخه‌ی کامل بازی ←</a>
+        </div>
       </div>
       <div class="arcade-foot">
-        <span>🏆 رکورد: <b id="best">۰</b></span>
-        <span class="blink">▶ روی هیولا کلیک کن!</span>
+        <div class="dpad" dir="ltr">
+          <button data-d="up" aria-label="بالا">▲</button>
+          <button data-d="left" aria-label="چپ">◀</button>
+          <button data-d="down" aria-label="پایین">▼</button>
+          <button data-d="right" aria-label="راست">▶</button>
+        </div>
+        <div class="foot-info">
+          <span>🏆 رکورد: <b id="sBest">۰</b></span>
+          <span class="blink">🐭 موش بگیر!</span>
+        </div>
       </div>
     </div>
   </section>
@@ -321,33 +336,33 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
     <div class="stats-in">
       <div class="stat"><div class="stat-num" data-target="12" data-suffix="+">۰</div><div class="stat-label">بازی آنلاین</div></div>
       <div class="stat"><div class="stat-num" data-target="100" data-suffix="٪">۰</div><div class="stat-label">رایگان</div></div>
-      <div class="stat"><div class="stat-num" data-target="0">۰</div><div class="stat-label">وابستگی خارجی</div></div>
-      <div class="stat"><div class="stat-num" data-target="60">۰</div><div class="stat-label">فریم بر ثانیه</div></div>
+      <div class="stat"><div class="stat-num" data-target="0">۰</div><div class="stat-label">نیاز به نصب</div></div>
+      <div class="stat"><div class="stat-num" data-target="24" data-suffix="/۷">۰</div><div class="stat-label">در دسترس</div></div>
     </div>
   </div>
 
-  <!-- نمونه‌کارها -->
+  <!-- بازی‌ها -->
   <section id="games">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="sec-kicker">🎮 نمونه‌کارها</span>
-        <h2>هر کارت، یک بازی واقعی و زنده</h2>
-        <p>همه‌ی بازی‌ها آنلاین‌اند و همین حالا اجرا می‌شوند — روی «بازی کن» بزن و لذت ببر.</p>
+        <span class="sec-kicker">🎮 بازی‌ها</span>
+        <h2>یکی را انتخاب کن و شروع کن!</h2>
+        <p>روی «بازی کن» بزن تا همان لحظه اجرا شود. همه‌ی بازی‌ها رایگان‌اند و رکوردت ذخیره می‌ماند.</p>
       </div>
       <div class="games-grid">
 
         <article class="game-card reveal">
           <span class="card-no">۰۱</span>
           <div class="game-top"><span class="game-icon">🧩</span><h3>زیپ — مسیر اعداد</h3></div>
-          <p>اعداد را به ترتیب از ۱ تا آخر به هم وصل کن؛ یک پازل مینیمال که حسابی اعتیادآور است!</p>
-          <div class="game-tags"><span>پازل</span><span>فکری</span><span>مینیمال</span></div>
+          <p>اعداد را به ترتیب به هم وصل کن؛ ساده به نظر می‌رسد ولی حسابی اعتیادآور است!</p>
+          <div class="game-tags"><span>پازل</span><span>فکری</span><span>اعتیادآور</span></div>
           <a class="game-link" href="https://intellsoft.github.io/Zip-online-game/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
 
         <article class="game-card reveal">
           <span class="card-no">۰۲</span>
           <div class="game-top"><span class="game-icon">🔢</span><h3>سودوکو آنلاین</h3></div>
-          <p>سودوکوی کلاسیک با رابطی زیبا و سطح‌های مختلف سختی؛ ذهنت را به چالش بکش.</p>
+          <p>سودوکوی کلاسیک با سه سطح سختی؛ ذهنت را حسابی به کار بینداز.</p>
           <div class="game-tags"><span>فکری</span><span>منطق</span><span>کلاسیک</span></div>
           <a class="game-link" href="https://intellsoft.github.io/sudoku-free-online-game/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
@@ -355,7 +370,7 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
         <article class="game-card reveal">
           <span class="card-no">۰۳</span>
           <div class="game-top"><span class="game-icon">🟦</span><h3>تتریس آنلاین</h3></div>
-          <p>تتریس نوستالژیک با گرافیک مدرن و کنترل‌های روان؛ بلوک‌ها را بچین و رکورد بزن.</p>
+          <p>بلوک‌ها را بچین، خط‌ها را کامل کن و رکورد بزن!</p>
           <div class="game-tags"><span>آرکید</span><span>کلاسیک</span><span>رکوردی</span></div>
           <a class="game-link" href="https://intellsoft.github.io/online-tetris-game/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
@@ -363,23 +378,23 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
         <article class="game-card reveal">
           <span class="card-no">۰۴</span>
           <div class="game-top"><span class="game-icon">🐍</span><h3>بازی مار</h3></div>
-          <p>مارِ کلاسیک با طراحی امروزی؛ غذا بخور، بزرگ شو و به خودت نخور!</p>
-          <div class="game-tags"><span>آرکید</span><span>نوستالژی</span><span>ساده</span></div>
+          <p>مارِ گرسنه را به موش‌ها برسان؛ مواظب باش به دیوار و خودت نخوری!</p>
+          <div class="game-tags"><span>آرکید</span><span>نوستالژی</span><span>سرگرمی</span></div>
           <a class="game-link" href="https://intellsoft.github.io/snake-game-web/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
 
         <article class="game-card reveal">
           <span class="card-no">۰۵</span>
           <div class="game-top"><span class="game-icon">🚢</span><h3>زیردریایی‌بازی</h3></div>
-          <p>زیردریایی‌ات را هدایت کن، از موانع عبور کن و امتیاز جمع کن؛ هیجان خالص!</p>
-          <div class="game-tags"><span>آرکید</span><span>اکشن</span><span>هیجانی</span></div>
+          <p>زیردریایی را هدایت کن و از موانع فرار کن؛ هرچه جلوتر بروی، سخت‌تر می‌شود!</p>
+          <div class="game-tags"><span>اکشن</span><span>هیجانی</span><span>آرکید</span></div>
           <a class="game-link" href="https://intellsoft.github.io/zirdaryabazi/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
 
         <article class="game-card reveal">
           <span class="card-no">۰۶</span>
           <div class="game-top"><span class="game-icon">🎴</span><h3>یادبازی — حافظه</h3></div>
-          <p>کارت‌ها را برگردان و جفت‌های مشابه را پیدا کن؛ بهترین تمرین برای حافظه.</p>
+          <p>کارت‌ها را برگردان و جفت‌ها را پیدا کن؛ تمرین عالی برای حافظه.</p>
           <div class="game-tags"><span>حافظه</span><span>فکری</span><span>کارتی</span></div>
           <a class="game-link" href="https://intellsoft.github.io/mind-game/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
@@ -387,7 +402,7 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
         <article class="game-card reveal">
           <span class="card-no">۰۷</span>
           <div class="game-top"><span class="game-icon">✖️</span><h3>جدول ضرب</h3></div>
-          <p>جدول ضرب را با بازی یاد بگیر؛ عالی برای کودکان و تمرین روزانه‌ی ریاضی.</p>
+          <p>جدول ضرب را با بازی تمرین کن؛ عالی برای بچه‌ها.</p>
           <div class="game-tags"><span>آموزشی</span><span>ریاضی</span><span>کودکان</span></div>
           <a class="game-link" href="https://intellsoft.github.io/bazi-jadval-zarb/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
@@ -395,31 +410,31 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
         <article class="game-card reveal">
           <span class="card-no">۰۸</span>
           <div class="game-top"><span class="game-icon">🌐</span><h3>اچ‌تی‌ام‌ال کویست</h3></div>
-          <p>HTML را با بازی یاد بگیر؛ مرحله‌های چالشی که مفاهیم کدنویسی را آموزش می‌دهند.</p>
-          <div class="game-tags"><span>آموزش کد</span><span>HTML</span><span>تعاملی</span></div>
+          <p>با حل کردن مرحله‌ها، ساختن وب‌سایت را یاد بگیر.</p>
+          <div class="game-tags"><span>آموزشی</span><span>کدنویسی</span><span>تعاملی</span></div>
           <a class="game-link" href="https://intellsoft.github.io/html-game/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
 
         <article class="game-card reveal">
           <span class="card-no">۰۹</span>
           <div class="game-top"><span class="game-icon">🎨</span><h3>سی‌اس‌اس کویست</h3></div>
-          <p>استایل‌دهی وب را با بازی بیاموز؛ هر مرحله یک چالش CSS، جدید و جذاب.</p>
-          <div class="game-tags"><span>آموزش کد</span><span>CSS</span><span>طراحی</span></div>
+          <p>یاد بگیر چطور وب‌سایت‌ها رنگ و لعاب می‌گیرند!</p>
+          <div class="game-tags"><span>آموزشی</span><span>کدنویسی</span><span>طراحی</span></div>
           <a class="game-link" href="https://intellsoft.github.io/css-game/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
 
         <article class="game-card reveal">
           <span class="card-no">۱۰</span>
           <div class="game-top"><span class="game-icon">📊</span><h3>اکسل کویست</h3></div>
-          <p>اکسل را با بازی یاد بگیر؛ فرمول‌ها و توابع را در محیط بازی تمرین کن.</p>
-          <div class="game-tags"><span>آموزش</span><span>Excel</span><span>مهارت</span></div>
+          <p>اکسل را قدم‌به‌قدم و با بازی یاد بگیر.</p>
+          <div class="game-tags"><span>آموزشی</span><span>مهارت</span><span>اکسل</span></div>
           <a class="game-link" href="https://intellsoft.github.io/excel-learn-game/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
 
         <article class="game-card reveal">
           <span class="card-no">۱۱</span>
           <div class="game-top"><span class="game-icon">🎵</span><h3>سنتور رنگین‌کمان</h3></div>
-          <p>سنتور مجازی با رنگ‌های شاد؛ بنواز، ملودی بساز و از موسیقی لذت ببر.</p>
+          <p>سنتور مجازی با رنگ‌های شاد؛ بنواز و آهنگ بساز!</p>
           <div class="game-tags"><span>موسیقی</span><span>خلاقیت</span><span>سرگرمی</span></div>
           <a class="game-link" href="https://intellsoft.github.io/RainbowSantoor/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
@@ -427,8 +442,8 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
         <article class="game-card reveal">
           <span class="card-no">۱۲</span>
           <div class="game-top"><span class="game-icon">🅱️</span><h3>بوت‌استرپ کویست</h3></div>
-          <p>فریم‌ورک Bootstrap را با بازی بشناس؛ کلاس‌ها و کامپوننت‌ها را تعاملی یاد بگیر.</p>
-          <div class="game-tags"><span>آموزش کد</span><span>Bootstrap</span><span>فریم‌ورک</span></div>
+          <p>با بازی، بوت‌استرپ را بشناس و تمرین کن.</p>
+          <div class="game-tags"><span>آموزشی</span><span>کدنویسی</span><span>فریم‌ورک</span></div>
           <a class="game-link" href="https://intellsoft.github.io/bootstrapt-game/" target="_blank" rel="noopener">بازی کن <span>←</span></a>
         </article>
 
@@ -436,44 +451,43 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
     </div>
   </section>
 
-  <!-- نوار تکنولوژی -->
+  <!-- نوار مزایا -->
   <div class="tech" aria-hidden="true">
     <div class="tech-in">
-      <span>⚡ HTML5</span><b>✦</b><span>🎨 CSS3</span><b>✦</b><span>🟨 JavaScript</span><b>✦</b><span>🖼️ Canvas API</span><b>✦</b><span>🚫 بدون CDN</span><b>✦</b><span>📱 ریسپانسیو</span><b>✦</b><span>🌙 تم تاریک و روشن</span><b>✦</b><span>📂 متن‌باز</span><b>✦</b>
-      <span>⚡ HTML5</span><b>✦</b><span>🎨 CSS3</span><b>✦</b><span>🟨 JavaScript</span><b>✦</b><span>🖼️ Canvas API</span><b>✦</b><span>🚫 بدون CDN</span><b>✦</b><span>📱 ریسپانسیو</span><b>✦</b><span>🌙 تم تاریک و روشن</span><b>✦</b><span>📂 متن‌باز</span><b>✦</b>
+      <span>🆓 همه‌ی بازی‌ها رایگان</span><b>✦</b><span>📱 روی موبایل و کامپیوتر</span><b>✦</b><span>⚡ اجرای فوری، بدون دانلود</span><b>✦</b><span>🏆 رکوردهایت ذخیره می‌شوند</span><b>✦</b><span>🌙 حالت شب و روز</span><b>✦</b><span>🎮 ۱۲ بازی متنوع</span><b>✦</b>
+      <span>🆓 همه‌ی بازی‌ها رایگان</span><b>✦</b><span>📱 روی موبایل و کامپیوتر</span><b>✦</b><span>⚡ اجرای فوری، بدون دانلود</span><b>✦</b><span>🏆 رکوردهایت ذخیره می‌شوند</span><b>✦</b><span>🌙 حالت شب و روز</span><b>✦</b><span>🎮 ۱۲ بازی متنوع</span><b>✦</b>
     </div>
   </div>
 
-  <!-- ویژگی‌ها -->
+  <!-- چرا اینجا بازی کنی؟ -->
   <section id="features">
     <div class="wrap">
       <div class="sec-head teal reveal">
-        <span class="sec-kicker">✨ چرا بازی‌های ما؟</span>
-        <h2>کوچک، ولی مهندسی‌شده</h2>
-        <p>هر بازی با وسواس ساخته شده؛ نه یک خط کدِ اضافه، نه یک کیلوبایت سنگینی.</p>
+        <span class="sec-kicker">✨ دلایل ساده</span>
+        <h2>چرا اینجا بازی کنی؟</h2>
+        <p>بدون دردسر، بدون هزینه — فقط سرگرمی.</p>
       </div>
       <div class="bento">
         <div class="feat f-big reveal">
           <span class="feat-icon">⚡</span>
-          <h3>سبکِ پَر، سریعِ برق</h3>
-          <p>بدون فریم‌ورک، بدون کتابخانه‌ی سنگین، بدون CDN. فقط HTML و CSS و جاوااسکریپتِ خالص که روی هر دستگاهی مثل ساعت کار می‌کند — حتی با اینترنت ضعیف.</p>
-          <span class="code-chip">&lt;canvas&gt; + Vanilla JS = 🚀</span>
+          <h3>همان لحظه اجرا می‌شوند</h3>
+          <p>نیازی به اینترنت پرسرعت یا گوشی قوی نیست؛ بازی‌ها سبک‌اند و در یک چشم به هم زدن بالا می‌آیند.</p>
         </div>
         <div class="feat reveal">
           <span class="feat-icon">📱</span>
-          <h3>همه‌جا ریسپانسیو</h3>
-          <p>موبایل، تبلت یا مانیتور بزرگ؛ چیدمان و کنترل‌ها خودشان را وفق می‌دهند.</p>
+          <h3>روی همه دستگاه‌ها</h3>
+          <p>موبایل، تبلت یا کامپیوتر — فرقی نمی‌کند؛ همه‌جا راحت بازی کن.</p>
         </div>
         <div class="feat reveal">
           <span class="feat-icon">🎯</span>
-          <h3>بدون نصب</h3>
-          <p>لینک را باز کن و بازی کن؛ خبری از دانلود، نصب و آپدیت نیست.</p>
+          <h3>بدون نصب و ثبت‌نام</h3>
+          <p>نه دانلود، نه نصب، نه ساخت حساب. فقط یک کلیک و شروع!</p>
         </div>
         <div class="feat f-wide reveal">
           <span class="feat-icon">🌙</span>
           <div>
-            <h3>تم تاریک و روشن + متن‌باز</h3>
-            <p>مثل همین صفحه، با یک کلیک تم عوض می‌شود و همه‌ی کدها روی گیت‌هاب، آزاد و برای یادگیری در دسترس‌اند.</p>
+            <h3>شب یا روز، هرطور دوست داری</h3>
+            <p>با یک کلیک رنگ صفحه عوض می‌شود؛ رکوردهایت هم همیشه ذخیره می‌مانند.</p>
           </div>
         </div>
       </div>
@@ -485,8 +499,8 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
     <div class="wrap">
       <div class="crt reveal">
         <p class="crt-blink">▮ INSERT COIN ▮</p>
-        <h2>بازیِ بعدی رو <span class="hl">برای تو</span> می‌سازیم!</h2>
-        <p>بازی تبلیغاتی برای برند، بازی آموزشی برای مدرسه، یا یک سرگرمی خالص — از ایده تا اجرا با ماست.</p>
+        <h2>بازیِ بعدی را <span class="hl">برای تو</span> می‌سازیم!</h2>
+        <p>برای فروشگاه‌ات بازی تبلیغاتی می‌خواهی؟ یا یک بازی آموزشی برای بچه‌ها؟ ایده‌ات را بگو، ما می‌سازیم.</p>
         <div class="crt-btns">
           <a class="btn btn-primary" href="https://intellsoft.ir" target="_blank" rel="noopener">🌐 سفارش در اینتل‌سافت</a>
           <a class="btn btn-ghost crt-ghost" href="https://github.com/intellsoft" target="_blank" rel="noopener">💻 گیت‌هاب ما</a>
@@ -503,11 +517,11 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
     <div class="foot-links">
       <a href="https://intellsoft.ir" target="_blank" rel="noopener">وب‌سایت رسمی</a>
       <a href="https://github.com/intellsoft" target="_blank" rel="noopener">گیت‌هاب</a>
-      <a href="#games">نمونه‌کارها</a>
-      <a href="#features">ویژگی‌ها</a>
+      <a href="#games">بازی‌ها</a>
+      <a href="#features">چرا ما؟</a>
       <a href="#cta">سفارش بازی</a>
     </div>
-    <div class="foot-bottom">© ۱۴۰۵ اینتل‌سافت — ساخته‌شده با ❤️ و جاوااسکریپتِ خالص، بدون حتی یک CDN</div>
+    <div class="foot-bottom">© ۱۴۰۵ اینتل‌سافت — ساخته‌شده با ❤️ برای بازی‌دوستان</div>
   </div>
 </footer>
 
@@ -515,13 +529,13 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:2px solid va
 const toFa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ---------- تم تاریک / روشن ---------- */
+/* ---------- حالت شب / روز ---------- */
 const body=document.body,themeBtn=document.getElementById('themeBtn');
 function setTheme(t){body.dataset.theme=t;themeBtn.textContent=t==='dark'?'🌙':'☀️';try{localStorage.setItem('is-theme',t)}catch(e){}}
 try{setTheme(localStorage.getItem('is-theme')||'dark')}catch(e){setTheme('dark')}
 themeBtn.addEventListener('click',()=>setTheme(body.dataset.theme==='dark'?'light':'dark'));
 
-/* ---------- پیکسل‌های شناور پس‌زمینه ---------- */
+/* ---------- پیکسل‌های شناور ---------- */
 if(!reduce){
   const box=document.getElementById('bgPixels'),colors=['#ffc233','#2ec4b6','#ff6b81','#a8d94a'];
   for(let i=0;i<22;i++){
@@ -553,29 +567,139 @@ const cObs=new IntersectionObserver(es=>{
 },{threshold:.6});
 document.querySelectorAll('.stat-num').forEach(el=>cObs.observe(el));
 
-/* ---------- مینی‌گیم «شکار هیولا» ---------- */
-const arena=document.getElementById('arena'),inv=document.getElementById('invader'),
-      scoreEl=document.getElementById('score'),bestEl=document.getElementById('best');
-const faces=['👾','🛸','🤖','👽'];
-let score=0,best=0;
-try{best=+localStorage.getItem('is-best')||0}catch(e){}
-bestEl.textContent=toFa(best);
-function moveInv(){
-  inv.style.left=(6+Math.random()*76)+'%';
-  inv.style.top=(6+Math.random()*68)+'%';
-  inv.textContent=faces[Math.random()*faces.length|0];
+/* ================= بازی مارِ گرسنه ================= */
+const cv=document.getElementById('snakeCv'),ctx=cv.getContext('2d');
+const COLS=17,ROWS=13,CELL=20;
+const sArena=document.getElementById('sArena'),
+      sScore=document.getElementById('sScore'),sBest=document.getElementById('sBest'),
+      sOverlay=document.getElementById('sOverlay'),sOvTitle=document.getElementById('sOvTitle'),
+      sOvText=document.getElementById('sOvText'),sStart=document.getElementById('sStart');
+let snake,dir,nextDir,food,score=0,best=0,timer=null,speed=160,playing=false;
+try{best=+localStorage.getItem('snake-best')||0}catch(e){}
+sBest.textContent=toFa(best);
+
+function placeFood(){
+  let ok=false;
+  while(!ok){
+    food={x:Math.random()*COLS|0,y:Math.random()*ROWS|0};
+    ok=!snake.some(s=>s.x===food.x&&s.y===food.y);
+  }
 }
-inv.addEventListener('click',()=>{
-  score+=10;scoreEl.textContent=toFa(score);
-  if(score>best){best=score;try{localStorage.setItem('is-best',best)}catch(e){}bestEl.textContent=toFa(best)}
-  const p=document.createElement('span');p.className='pop-score';p.textContent='+۱۰';
-  p.style.left=inv.style.left;p.style.top=inv.style.top;
-  arena.appendChild(p);setTimeout(()=>p.remove(),750);
-  inv.classList.remove('pop');void inv.offsetWidth;inv.classList.add('pop');
-  moveInv();
+function reset(){
+  snake=[{x:8,y:6},{x:9,y:6},{x:10,y:6}];
+  dir={x:-1,y:0};nextDir={x:-1,y:0};
+  score=0;sScore.textContent=toFa(0);speed=160;
+  placeFood();draw();
+}
+function rr(x,y,w,h,r){
+  if(ctx.roundRect){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
+  else ctx.fillRect(x,y,w,h);
+}
+/* --- موش کوچولو (کاملاً برداری، بدون ایموجی) --- */
+function drawMouse(cx,cy,faceLeft,t){
+  ctx.save();
+  ctx.translate(cx,cy+1);
+  if(faceLeft)ctx.scale(-1,1);
+  const w=Math.sin(t/220)*2.4; /* تکان دم */
+  ctx.strokeStyle='#e79cb3';ctx.lineWidth=1.7;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(-5.5,1.5);
+  ctx.quadraticCurveTo(-9.5,3.5+w,-12,-0.5+w*.5);
+  ctx.stroke();
+  ctx.fillStyle='#f0a8bd'; /* گوش‌ها */
+  ctx.beginPath();ctx.arc(3.2,-3.6,2.6,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(6.6,-3.1,2.3,0,7);ctx.fill();
+  ctx.fillStyle='#d3ccc4'; /* بدن و سر */
+  ctx.beginPath();ctx.ellipse(-0.5,1,6.6,4.4,0,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(5.2,0.2,3.6,0,7);ctx.fill();
+  ctx.fillStyle='#e87fa2'; /* داخل گوش */
+  ctx.beginPath();ctx.arc(3.4,-3.4,1.3,0,7);ctx.fill();
+  ctx.fillStyle='#20232b'; /* چشم */
+  ctx.beginPath();ctx.arc(6.2,-0.6,0.85,0,7);ctx.fill();
+  ctx.fillStyle='#ef6f9a'; /* بینی */
+  ctx.beginPath();ctx.arc(8.7,0.6,1.05,0,7);ctx.fill();
+  ctx.restore();
+}
+function draw(){
+  ctx.fillStyle='#0a1120';ctx.fillRect(0,0,cv.width,cv.height);
+  ctx.fillStyle='rgba(255,255,255,.03)';
+  for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)
+    if((x+y)%2===0)ctx.fillRect(x*CELL,y*CELL,CELL,CELL);
+  /* هاله‌ی زیر موش */
+  const fx=food.x*CELL+CELL/2,fy=food.y*CELL+CELL/2;
+  ctx.fillStyle='rgba(255,255,255,.06)';
+  ctx.beginPath();ctx.arc(fx,fy+1,8.5,0,7);ctx.fill();
+  /* موش رو به مار می‌ایستد! */
+  drawMouse(fx,fy,snake[0].x<food.x,performance.now());
+  /* مار */
+  snake.forEach((s,i)=>{
+    ctx.fillStyle=i===0?'#ffc233':'#2ec4b6';
+    rr(s.x*CELL+1.5,s.y*CELL+1.5,CELL-3,CELL-3,5);
+  });
+  const h=snake[0],cx=h.x*CELL+CELL/2,cy=h.y*CELL+CELL/2;
+  const fx2=dir.x*3,fy2=dir.y*3,px=dir.x!==0?0:4,py=dir.y!==0?0:4;
+  ctx.fillStyle='#0a1120';
+  ctx.beginPath();ctx.arc(cx+fx2-px,cy+fy2-py,2,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(cx+fx2+px,cy+fy2+py,2,0,7);ctx.fill();
+}
+function step(){
+  dir=nextDir;
+  const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+  if(h.x<0||h.y<0||h.x>=COLS||h.y>=ROWS||snake.some(s=>s.x===h.x&&s.y===h.y)){gameOver();return}
+  snake.unshift(h);
+  if(h.x===food.x&&h.y===food.y){
+    score+=10;sScore.textContent=toFa(score);
+    /* افکت +۱۰ */
+    const p=document.createElement('span');p.className='pop-score';p.textContent='+۱۰';
+    p.style.left=((food.x+.5)/COLS*100)+'%';p.style.top=(food.y/ROWS*100)+'%';
+    sArena.appendChild(p);setTimeout(()=>p.remove(),750);
+    if(score>best){best=score;try{localStorage.setItem('snake-best',best)}catch(e){}sBest.textContent=toFa(best)}
+    if(speed>75){speed-=4;clearInterval(timer);timer=setInterval(step,speed)}
+    placeFood();
+  }else snake.pop();
+  if(reduce)draw();
+}
+function gameOver(){
+  clearInterval(timer);playing=false;
+  sOvTitle.textContent='💥 آخ! بازی تمام شد';
+  sOvText.innerHTML='امتیاز تو: <b>'+toFa(score)+'</b> — رکورد: <b>'+toFa(best)+'</b>';
+  sStart.textContent='🔁 دوباره بازی';
+  sOverlay.classList.remove('hide');
+}
+function start(){
+  reset();sOverlay.classList.add('hide');playing=true;
+  clearInterval(timer);timer=setInterval(step,speed);
+}
+sStart.addEventListener('click',start);
+
+function setDir(x,y){
+  if(!playing)return;
+  if(dir.x===-x&&dir.y===-y)return;
+  nextDir={x,y};
+}
+window.addEventListener('keydown',e=>{
+  const map={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]};
+  const k=e.key.length===1?e.key.toLowerCase():e.key;
+  if(map[k]){if(playing){e.preventDefault();setDir(...map[k])}}
+  else if((e.key===' '||e.key==='Enter')&&!playing&&!sOverlay.classList.contains('hide')){e.preventDefault();start()}
 });
-moveInv();
-if(!reduce)setInterval(moveInv,1600);
+document.querySelectorAll('.dpad button').forEach(b=>{
+  const m={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]}[b.dataset.d];
+  b.addEventListener('click',()=>setDir(...m));
+});
+let tx=0,ty=0;
+cv.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+cv.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)<24&&Math.abs(dy)<24)return;
+  if(Math.abs(dx)>Math.abs(dy))setDir(Math.sign(dx),0);else setDir(0,Math.sign(dy));
+},{passive:true});
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden&&playing)clearInterval(timer);
+  else if(!document.hidden&&playing){clearInterval(timer);timer=setInterval(step,speed)}
+});
+reset();
+/* رندر روان و پیوسته (دمِ موش همیشه در حال تکان است) */
+if(!reduce)(function render(){draw();requestAnimationFrame(render)})();
 
 /* ---------- کد مخفی کونامی (↑↑↓↓←→←→BA) ---------- */
 const seq=['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'];
